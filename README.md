@@ -9,13 +9,13 @@
 └── templates / chat.html     # Интерфейс на HTML/JS  
 
 # Установка
-ssh ваш_пользователь@ip_адрес
-mkdir -p ~/llm && cd ~/llm
-sudo apt update && sudo apt upgrade -y
-sudo apt install -y python3-pip python3-venv wget git build-essential
-python3 -m venv venv
-source venv/bin/activate
-pip install llama-cpp-python fastapi uvicorn sse-starlette pydantic
+ssh ваш_пользователь@ip_адрес  
+mkdir -p ~/llm && cd ~/llm  
+sudo apt update && sudo apt upgrade -y  
+sudo apt install -y python3-pip python3-venv wget git build-essential  
+python3 -m venv venv  
+source venv/bin/activate  
+pip install llama-cpp-python fastapi uvicorn sse-starlette pydantic  
 
 # Скачать модель (3.5GB)
 wget https://huggingface.co/IlyaGusev/saiga_yandexgpt_8b_gguf/resolve/main/saiga_yandexgpt_8b.Q3_K_S.gguf -O saiga_8b.Q3_K_S.gguf
