@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Saiga 8B Chat</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        #chatbox { border: 1px solid #ccc; height: 400px; overflow-y: scroll; padding: 10px; margin-bottom: 10px; }
+        #userInput { width: 70%; padding: 8px; }
+        button { padding: 8px 15px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+        .bot { color: #0066cc; margin: 5px 0; }
+        .user { color: #333; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>Saiga 8B Chat (Q3_K_S)</h1>
+    <div id="chatbox"></div>
+    <input type="text" id="userInput" placeholder="Введите сообщение...">
+    <button onclick="sendMessage()">Отправить</button>
+
+    <script>
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            // Добавляем сообщение пользователя
+            const chatbox = document.getElementById('chatbox');
+            chatbox.innerHTML += `<div class="user"><strong>Вы:</strong> ${message}</div>`;
+            
+            // Очищаем поле ввода
+            input.value = '';
+            
+            // Добавляем индикатор загрузки
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'bot';
+            loadingDiv.innerHTML = '<strong>Бот:</strong> <em>Думает...</em>';
+            chatbox.appendChild(loadingDiv);
+            chatbox.scrollTop = chatbox.scrollHeight;
+            
+            // Отправляем запрос
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message })
+                });
+                
+                const data = await response.json();
+                
+                // Заменяем индикатор на ответ
+                loadingDiv.innerHTML = `<strong>Бот:</strong> ${data.response}`;
+            } catch (error) {
+                loadingDiv.innerHTML = '<strong>Ошибка:</strong> Не удалось получить ответ';
+            }
+            
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+        
+        // Отправка по Enter
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>
