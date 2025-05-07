@@ -1,7 +1,7 @@
 # Локальный чат-бот Saiga 8B Q3_K_S
 Полная реализация локального чат-бота с веб-интерфейсом для модели Saiga 8B Q3_K_S, оптимизированная под Intel N100 + 8GB RAM + NVMe
 
-## Структура проекта
+# Структура проекта
 
 ~/llm/  
 ├── chatbot_web.py # FastAPI сервер + логика генерации  
@@ -9,21 +9,20 @@
 └── templates/  
 _____ └── chat.html # Интерфейс на HTML/JS  
 
-## Установка
+# Установка
 
 # Скачать модель (3.5GB)
 wget https://huggingface.co/IlyaGusev/saiga_yandexgpt_8b_gguf/resolve/main/saiga_yandexgpt_8b.Q3_K_S.gguf -O saiga_8b.Q3_K_S.gguf
 
 # Установка зависимостей (CPU-only)
 pip install llama-cpp-python[server] --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
+
 pip install fastapi uvicorn jinja2 python-multipart
 
-bash
-python3 chatbot_web.py \
-  --workers 1 \
-  --limit-max-requests 100 \
-  --n_ctx 2048 \
-  --n-gpu-layers 0  # CPU-only режим
+mkdir -p templates static
+
+python3 chatbot_web.py --workers 1 --limit-max-requests 100
+
 После запуска откройте: http://localhost:8000
 
 Ключевые параметры модели
