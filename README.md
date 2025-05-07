@@ -7,7 +7,7 @@
 ├── chatbot_web.py # FastAPI сервер + логика генерации  
 ├── saiga_8b.Q3_K_S.gguf # Квантованная модель 3.5GB  
 └── templates/  
-     └── chat.html # Интерфейс на HTML/JS  
+_____ └── chat.html # Интерфейс на HTML/JS  
 
 ## Установка
 
